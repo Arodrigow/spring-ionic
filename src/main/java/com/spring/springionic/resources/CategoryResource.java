@@ -1,8 +1,5 @@
 package com.spring.springionic.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.spring.springionic.domain.Category;
 import com.spring.springionic.services.CategoryService;
 

@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.springionic.domain.enums.PaymentStatus;
 
 @Entity
@@ -21,9 +22,11 @@ public abstract class Payment implements Serializable{
     private Integer id;
     private Integer status;
 
+
     @OneToOne
     @JoinColumn(name = "app_order_id")
     @MapsId
+    @JsonIgnore
     private AppOrder appOrder;
 
     public Payment(){}
@@ -50,6 +53,7 @@ public abstract class Payment implements Serializable{
         this.status = status.getCod();
     }
 
+    @JsonIgnore
     public AppOrder getOrder() {
         return appOrder;
     }

@@ -1,18 +1,26 @@
 package com.spring.springionic;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import com.spring.springionic.domain.Address;
+import com.spring.springionic.domain.AppOrder;
+import com.spring.springionic.domain.BilletPayment;
 import com.spring.springionic.domain.Category;
 import com.spring.springionic.domain.City;
 import com.spring.springionic.domain.Client;
+import com.spring.springionic.domain.CreditCardPayment;
+import com.spring.springionic.domain.Payment;
 import com.spring.springionic.domain.Product;
 import com.spring.springionic.domain.State;
 import com.spring.springionic.domain.enums.ClientType;
+import com.spring.springionic.domain.enums.PaymentStatus;
 import com.spring.springionic.repositories.AddressRepository;
 import com.spring.springionic.repositories.CategoryRepository;
 import com.spring.springionic.repositories.CityRepository;
 import com.spring.springionic.repositories.ClientRepository;
+import com.spring.springionic.repositories.OrderRepository;
+import com.spring.springionic.repositories.PaymentRepository;
 import com.spring.springionic.repositories.ProductRepository;
 import com.spring.springionic.repositories.StateRepository;
 
@@ -36,6 +44,10 @@ public class SpringIonicApplication implements CommandLineRunner{
 	private AddressRepository addressRepository;
 	@Autowired
 	private ClientRepository clientRepository;
+	@Autowired
+	private OrderRepository orderRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIonicApplication.class, args);
@@ -83,6 +95,22 @@ public class SpringIonicApplication implements CommandLineRunner{
 
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(a1, a2));
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		AppOrder ord1 = new AppOrder(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
+		AppOrder ord2 = new AppOrder(null, sdf.parse("10/10/2017 19:35"), cli1, a2);
+
+		Payment pay1= new CreditCardPayment(null, PaymentStatus.PAID, ord1, 6);
+		ord1.setPayment(pay1);
+
+		Payment pay2 = new BilletPayment(null, PaymentStatus.PENDING, ord2, sdf.parse("20/10/2017 00:00"), null);
+		ord2.setPayment(pay2);
+
+		cli1.getOrders().addAll(Arrays.asList(ord1, ord2));
+
+		orderRepository.saveAll(Arrays.asList(ord1, ord2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 
 }

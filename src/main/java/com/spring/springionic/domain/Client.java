@@ -110,7 +110,7 @@ public class Client implements Serializable{
     }
 
     public void setOrders(List<AppOrder> orders) {
-        this.appOrders = appOrders;
+        this.appOrders = orders;
     }
 
     @Override

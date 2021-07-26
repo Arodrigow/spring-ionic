@@ -54,7 +54,7 @@ public abstract class Payment implements Serializable{
         return appOrder;
     }
 
-    public void setOrder(AppOrder AppOrder) {
+    public void setOrder(AppOrder appOrder) {
         this.appOrder = appOrder;
     }
 

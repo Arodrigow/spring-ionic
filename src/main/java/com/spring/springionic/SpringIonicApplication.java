@@ -2,12 +2,17 @@ package com.spring.springionic;
 
 import java.util.Arrays;
 
+import com.spring.springionic.domain.Address;
 import com.spring.springionic.domain.Category;
 import com.spring.springionic.domain.City;
+import com.spring.springionic.domain.Client;
 import com.spring.springionic.domain.Product;
 import com.spring.springionic.domain.State;
+import com.spring.springionic.domain.enums.ClientType;
+import com.spring.springionic.repositories.AddressRepository;
 import com.spring.springionic.repositories.CategoryRepository;
 import com.spring.springionic.repositories.CityRepository;
+import com.spring.springionic.repositories.ClientRepository;
 import com.spring.springionic.repositories.ProductRepository;
 import com.spring.springionic.repositories.StateRepository;
 
@@ -27,6 +32,10 @@ public class SpringIonicApplication implements CommandLineRunner{
 	private StateRepository stateRepository;
 	@Autowired
 	private CityRepository cityRepository;
+	@Autowired
+	private AddressRepository addressRepository;
+	@Autowired
+	private ClientRepository clientRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringIonicApplication.class, args);
@@ -63,6 +72,17 @@ public class SpringIonicApplication implements CommandLineRunner{
 
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
+
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", ClientType.NATURALPERSON);
+		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+
+		Address a1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);
+		Address a2 = new Address(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, c2);
+
+		cli1.getAddresses().addAll(Arrays.asList(a1, a2));
+
+		clientRepository.saveAll(Arrays.asList(cli1));
+		addressRepository.saveAll(Arrays.asList(a1, a2));
 	}
 
 }

@@ -61,6 +61,12 @@ public class SpringIonicApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		Category cat1 = new Category(null, "Computing");
 		Category cat2 = new Category(null, "Office");
+		Category cat3 = new Category(null, "Bed");
+		Category cat4 = new Category(null, "Pet");
+		Category cat5 = new Category(null, "Hardware");
+		Category cat6 = new Category(null, "Software");
+		Category cat7 = new Category(null, "Education");
+		Category cat8 = new Category(null, "Clothes");
 
 		Product p1 = new Product(null, "Computer", 2000.00);
 		Product p2 = new Product(null, "Printer", 800.00);
@@ -73,7 +79,7 @@ public class SpringIonicApplication implements CommandLineRunner{
 		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
 
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
 
 		State st1 = new State(null, "Minas Gerais");

@@ -1,5 +1,6 @@
 package com.spring.springionic.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.spring.springionic.domain.Category;
@@ -39,5 +40,9 @@ public class CategoryService {
         }catch(DataIntegrityViolationException e){
             throw new DataIntegrityException("You are not allowed to delete a category with products attached");
         }
+    }
+
+    public List<Category> findAll(){
+        return repo.findAll();
     }
 }

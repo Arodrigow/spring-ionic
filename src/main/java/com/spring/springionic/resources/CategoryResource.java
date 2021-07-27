@@ -1,8 +1,12 @@
 package com.spring.springionic.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import com.spring.springionic.domain.Category;
+import com.spring.springionic.dto.CategoryDTO;
 import com.spring.springionic.services.CategoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +24,6 @@ public class CategoryResource {
 
     @Autowired
     CategoryService service;
-
-    @RequestMapping(value="/{id}" ,method = RequestMethod.GET)
-    public ResponseEntity<Category> find(@PathVariable Integer id){
-        Category obj = service.find(id);
-        return ResponseEntity.ok().body(obj);
-    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> insert(@RequestBody Category obj){
@@ -49,5 +47,18 @@ public class CategoryResource {
         service.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/{id}" ,method = RequestMethod.GET)
+    public ResponseEntity<Category> find(@PathVariable Integer id){
+        Category obj = service.find(id);
+        return ResponseEntity.ok().body(obj);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> findAll(){
+       List<Category> list = service.findAll();
+       List<CategoryDTO> listDTO = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDTO);
     }
 }

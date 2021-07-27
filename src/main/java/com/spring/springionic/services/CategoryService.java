@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.spring.springionic.domain.Category;
+import com.spring.springionic.dto.CategoryDTO;
 import com.spring.springionic.repositories.CategoryRepository;
 import com.spring.springionic.services.exceptions.DataIntegrityException;
 import com.spring.springionic.services.exceptions.ObjectNotFoundException;
@@ -52,5 +53,9 @@ public class CategoryService {
     public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);
+    }
+
+    public Category fromDto(CategoryDTO objDto){
+        return new Category(objDto.getId(), objDto.getName());
     }
 }

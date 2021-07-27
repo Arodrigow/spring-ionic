@@ -15,6 +15,10 @@ public class CategoryService {
     @Autowired
     private CategoryRepository repo;
 
+    public Category insert(Category obj){
+        return repo.save(obj);
+    }
+
     public Category find(Integer id){
        Optional<Category> obj = repo.findById(id);
        return obj.orElseThrow(() -> 

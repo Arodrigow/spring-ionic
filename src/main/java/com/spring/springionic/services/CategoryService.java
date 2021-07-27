@@ -19,6 +19,11 @@ public class CategoryService {
         return repo.save(obj);
     }
 
+    public Category update(Category obj){
+        find(obj.getId());
+        return repo.save(obj);
+    }
+
     public Category find(Integer id){
        Optional<Category> obj = repo.findById(id);
        return obj.orElseThrow(() -> 

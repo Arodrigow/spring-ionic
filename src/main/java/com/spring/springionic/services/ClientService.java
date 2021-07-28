@@ -30,8 +30,6 @@ public class ClientService {
     private ClientRepository repo;
     @Autowired
     private AddressRepository addressRepository;
-    @Autowired
-    private CityRepository cityRepository;
     
     @Transactional
     public Client insert(Client obj){
@@ -59,7 +57,7 @@ public class ClientService {
         try{
             repo.deleteById(id);
         }catch(DataIntegrityViolationException e){
-            throw new DataIntegrityException("You are not allowed to delete a Client with products attached");
+            throw new DataIntegrityException("You are not allowed to delete a Client with Orders attached");
         }
     }
     

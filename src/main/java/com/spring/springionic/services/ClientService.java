@@ -10,7 +10,6 @@ import com.spring.springionic.domain.enums.ClientType;
 import com.spring.springionic.dto.ClientDTO;
 import com.spring.springionic.dto.ClientNewDTO;
 import com.spring.springionic.repositories.AddressRepository;
-import com.spring.springionic.repositories.CityRepository;
 import com.spring.springionic.repositories.ClientRepository;
 import com.spring.springionic.services.exceptions.DataIntegrityException;
 import com.spring.springionic.services.exceptions.ObjectNotFoundException;

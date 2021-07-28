@@ -6,9 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.spring.springionic.domain.enums.PaymentStatus;
 
 @Entity
+@JsonTypeName("billetPayment")
 public class BilletPayment extends Payment{
     private static final long serialVersionUID = 1L;
     

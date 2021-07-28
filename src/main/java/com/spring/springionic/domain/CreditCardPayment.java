@@ -2,9 +2,11 @@ package com.spring.springionic.domain;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.spring.springionic.domain.enums.PaymentStatus;
 
 @Entity
+@JsonTypeName("creditCardPayment")
 public class CreditCardPayment extends Payment{
     private static final long serialVersionUID = 1L;
     

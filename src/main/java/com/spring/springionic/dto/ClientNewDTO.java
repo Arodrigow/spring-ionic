@@ -2,20 +2,44 @@ package com.spring.springionic.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import com.spring.springionic.services.validation.InsertClient;
+
+import org.hibernate.validator.constraints.Length;
+
+@InsertClient
 public class ClientNewDTO implements Serializable{
     private static final long serialVersionUID = 1L;
-
+    
+    @NotEmpty(message = "Must give a name.")
+    @Length(min = 5, max = 120, message = "Name length must be between 5 and 80 characters.")
     private String name;
+    
+    @NotEmpty(message = "Must give a email to the category!")
+    @Email(message = "Not a valid email.")
     private String email;
+
+    @NotEmpty(message = "Must give a email to the category!")
     private String cpfOrCnpj;
+
     private Integer type;
 
+    @NotEmpty(message = "Must give a email to the category!")
     private String publicPlace;
+
+    @NotEmpty(message = "Must give a email to the category!")
     private String number;
+
     private String complement;
+
     private String district;
+
+    @NotEmpty(message = "Must give a email to the category!")
     private String cep;
 
+    @NotEmpty(message = "Must give a email to the category!")
     private String phone1;
     private String phone2;
     private String phone3;

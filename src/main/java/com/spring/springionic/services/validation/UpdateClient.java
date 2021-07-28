@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = InsertClientValidator.class)
+@Constraint(validatedBy = UpdateClientValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface InsertClient {
+public @interface UpdateClient {
     
     String message() default "Validation Error";
     Class<?>[] groups() default {};

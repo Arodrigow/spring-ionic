@@ -51,6 +51,13 @@ public class AppOrder implements Serializable{
         this.deliveryAddress = deliveryAddress;
     }
 
+    public double getTotalValue(){
+        double soma = 0.0;
+        for (ItemOrder x : items){
+            soma += x.getSubTotal();
+        }
+        return soma;
+    }
     public Integer getId() {
         return id;
     }

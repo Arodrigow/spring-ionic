@@ -39,6 +39,9 @@ public class OrderService {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private EmailService emailService;
+
     public AppOrder find(Integer id){
        Optional<AppOrder> obj = repo.findById(id);
        return obj.orElseThrow(() -> 
@@ -69,6 +72,7 @@ public class OrderService {
         }
 
         itemOrderRepository.saveAll(obj.getItems());
+        emailService.sendOrderConfirmationEmail(obj);
         return obj;
     }
 }

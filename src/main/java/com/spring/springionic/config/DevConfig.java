@@ -3,6 +3,8 @@ package com.spring.springionic.config;
 import java.text.ParseException;
 
 import com.spring.springionic.services.DBService;
+import com.spring.springionic.services.EmailService;
+import com.spring.springionic.services.SmtpEmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,5 +29,10 @@ public class DevConfig {
         }
         dbService.instantiateTestDatabase();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }

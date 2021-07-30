@@ -7,10 +7,13 @@ import com.spring.springionic.domain.Address;
 import com.spring.springionic.domain.City;
 import com.spring.springionic.domain.Client;
 import com.spring.springionic.domain.enums.ClientType;
+import com.spring.springionic.domain.enums.Profile;
 import com.spring.springionic.dto.ClientDTO;
 import com.spring.springionic.dto.ClientNewDTO;
 import com.spring.springionic.repositories.AddressRepository;
 import com.spring.springionic.repositories.ClientRepository;
+import com.spring.springionic.secutiry.UserSS;
+import com.spring.springionic.services.exceptions.AuthorizationException;
 import com.spring.springionic.services.exceptions.DataIntegrityException;
 import com.spring.springionic.services.exceptions.ObjectNotFoundException;
 
@@ -43,7 +46,13 @@ public class ClientService {
     }
 
     public Client find(Integer id){
+        UserSS user = UserService.authenticated();
        Optional<Client> obj = repo.findById(id);
+
+       if(user == null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())){
+           throw new AuthorizationException("Access Denied");
+       }
+
        return obj.orElseThrow(() -> 
        new ObjectNotFoundException("Object not found! Id:"+id+", Tipo: "+ Client.class.getName()));
     }

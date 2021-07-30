@@ -2,6 +2,7 @@ package com.spring.springionic.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.spring.springionic.services.exceptions.AuthorizationException;
 import com.spring.springionic.services.exceptions.DataIntegrityException;
 import com.spring.springionic.services.exceptions.ObjectNotFoundException;
 
@@ -36,5 +37,11 @@ public class ResourceExceptionHandler {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> objectNotFound(AuthorizationException e, HttpServletRequest request){
+        StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
     }
 }

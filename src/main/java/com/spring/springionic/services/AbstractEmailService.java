@@ -6,6 +6,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
 import com.spring.springionic.domain.AppOrder;
+import com.spring.springionic.domain.Client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -41,6 +42,23 @@ public abstract class AbstractEmailService implements EmailService {
         } catch (MessagingException e) {
             sendOrderConfirmationEmail(obj);
         }
+    }
+
+    @Override
+    public void sendNewPasswordEmail(Client client, String newPass){        
+        SimpleMailMessage sm = prepareSimpleMailMessegeFromOrder(client, newPass);
+        sendEmail(sm);
+    }
+
+    protected SimpleMailMessage prepareSimpleMailMessegeFromOrder(Client client, String newPass) {
+        SimpleMailMessage sm = new SimpleMailMessage();
+        sm.setTo(client.getEmail());
+        sm.setFrom(sender);
+        sm.setSubject("New password solicitation");
+        sm.setSentDate(new Date(System.currentTimeMillis()));
+        sm.setText("New password: " + newPass);
+
+        return sm;
     }
 
     protected SimpleMailMessage prepareSimpleMailMessegeFromOrder(AppOrder obj) {

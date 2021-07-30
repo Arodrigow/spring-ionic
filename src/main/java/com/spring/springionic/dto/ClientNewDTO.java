@@ -17,29 +17,32 @@ public class ClientNewDTO implements Serializable{
     @Length(min = 5, max = 120, message = "Name length must be between 5 and 80 characters.")
     private String name;
     
-    @NotEmpty(message = "Must give a email to the category!")
+    @NotEmpty(message = "Must give a email!")
     @Email(message = "Not a valid email.")
     private String email;
 
-    @NotEmpty(message = "Must give a email to the category!")
+    @NotEmpty(message = "Must give a password !")
+    private String password;
+
+    @NotEmpty(message = "Must give a cpf!")
     private String cpfOrCnpj;
 
     private Integer type;
 
-    @NotEmpty(message = "Must give a email to the category!")
+    @NotEmpty(message = "Must be filled!")
     private String publicPlace;
 
-    @NotEmpty(message = "Must give a email to the category!")
+    @NotEmpty(message = "Must be filled!")
     private String number;
 
     private String complement;
 
     private String district;
 
-    @NotEmpty(message = "Must give a email to the category!")
+    @NotEmpty(message = "Must be filled!")
     private String cep;
 
-    @NotEmpty(message = "Must give a email to the category!")
+    @NotEmpty(message = "Must be filled!")
     private String phone1;
     private String phone2;
     private String phone3;
@@ -62,6 +65,14 @@ public class ClientNewDTO implements Serializable{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getCpfOrCnpj() {

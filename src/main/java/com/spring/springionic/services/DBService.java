@@ -28,11 +28,14 @@ import com.spring.springionic.repositories.ProductRepository;
 import com.spring.springionic.repositories.StateRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DBService {
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 	@Autowired
 	private CategoryRepository categoryRepository;
 	@Autowired
@@ -111,7 +114,7 @@ public class DBService {
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Client cli1 = new Client(null, "Maria Silva", "alves.rodrigow@gmail.com", "36378912377", ClientType.NATURALPERSON);
+		Client cli1 = new Client(null, "Maria Silva", "alves.rodrigow@gmail.com", "36378912377", ClientType.NATURALPERSON, encoder.encode("123456"));
 		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 
 		Address a1 = new Address(null, "Rua Flores", "300", "Apto 303", "Jardim", "38220834", cli1, c1);

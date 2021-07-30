@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +21,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.spring.springionic.domain.enums.ClientType;
+import com.spring.springionic.domain.enums.Profile;
 
 @Entity
 public class Client implements Serializable{
@@ -45,11 +49,17 @@ public class Client implements Serializable{
     @CollectionTable(name = "PHONE")
     private Set<String> phones = new HashSet<>();
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "PROFILES")
+    private Set<Integer> profiles = new HashSet<>();
+
     @JsonIgnore
     @OneToMany(mappedBy = "client")    
     private List<AppOrder> appOrders = new ArrayList<>();
 
-    public Client(){}
+    public Client(){
+        addProfile(Profile.CLIENT);
+    }
 
     public Client(Integer id, String name, String email, String cpfOrCnpj, ClientType type, String password) {
         this.id = id;
@@ -58,6 +68,7 @@ public class Client implements Serializable{
         this.cpfOrCnpj = cpfOrCnpj;
         this.password = password;
         this.type = (type==null) ? null : type.getCod();
+        addProfile(Profile.CLIENT);
     }
 
     public Integer getId() {
@@ -122,6 +133,14 @@ public class Client implements Serializable{
 
     public void setPhones(Set<String> phones) {
         this.phones = phones;
+    }
+
+    public Set<Profile> getProfiles(){
+        return profiles.stream().map(x -> Profile.toEnum(x)).collect(Collectors.toSet());
+    }
+
+    public void addProfile(Profile profile){
+        profiles.add(profile.getCod());
     }
     
     @JsonIgnore

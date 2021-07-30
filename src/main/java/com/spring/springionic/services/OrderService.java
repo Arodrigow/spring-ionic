@@ -7,14 +7,20 @@ import javax.validation.Valid;
 
 import com.spring.springionic.domain.AppOrder;
 import com.spring.springionic.domain.BilletPayment;
+import com.spring.springionic.domain.Client;
 import com.spring.springionic.domain.ItemOrder;
 import com.spring.springionic.domain.enums.PaymentStatus;
 import com.spring.springionic.repositories.ItemOrderRepository;
 import com.spring.springionic.repositories.OrderRepository;
 import com.spring.springionic.repositories.PaymentRepository;
+import com.spring.springionic.secutiry.UserSS;
+import com.spring.springionic.services.exceptions.AuthorizationException;
 import com.spring.springionic.services.exceptions.ObjectNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,5 +80,15 @@ public class OrderService {
         itemOrderRepository.saveAll(obj.getItems());
         emailService.sendOrderConfirmationHtmlEmail(obj);
         return obj;
+    }
+
+    public Page<AppOrder> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
+        UserSS user = UserService.authenticated();
+        if(user == null){
+            throw new AuthorizationException("Access denied.");
+        }
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+        Client client = clientService.find(user.getId());
+        return repo.findByClient(client, pageRequest);
     }
 }

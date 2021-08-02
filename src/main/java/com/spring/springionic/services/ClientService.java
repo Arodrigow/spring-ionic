@@ -90,6 +90,20 @@ public class ClientService {
         return repo.findAll();
     }
 
+    public Client findClientByEmail(String email){
+        
+       UserSS user = UserService.authenticated();
+       if(user == null || !user.hasRole(Profile.ADMIN) && !email.equals(user.getUsername())){
+           throw new AuthorizationException("Access Denied");
+       }
+
+       Client client = repo.findByEmail(email);
+       if(client==null){
+           throw new ObjectNotFoundException("Object not found! Id: "+user.getId()+", Type: "+ Client.class.getName());
+       }
+       return client;
+    }
+
     public Page<Client> findPage(Integer page, Integer linesPerPage, String orderBy, String direction){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
         return repo.findAll(pageRequest);

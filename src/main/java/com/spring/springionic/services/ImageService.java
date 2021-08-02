@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import com.spring.springionic.services.exceptions.FileException;
 
 import org.apache.commons.io.FilenameUtils;
+import org.imgscalr.Scalr;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,5 +49,18 @@ public class ImageService {
         } catch (IOException e) {
             throw new FileException("Error reading tile");
         }
+    }
+
+    public BufferedImage cropSquare(BufferedImage sourceImage){
+        int min = (sourceImage.getHeight() <= sourceImage.getWidth()) ? sourceImage.getHeight() : sourceImage.getWidth();
+        return Scalr.crop(sourceImage,
+         (sourceImage.getWidth()/2) - (min/2), 
+         (sourceImage.getHeight()/2) - (min/2), 
+         min,
+         min);
+    }
+
+    public BufferedImage resize(BufferedImage sourceImage, int size){
+        return Scalr.resize(sourceImage, Scalr.Method.ULTRA_QUALITY, size);
     }
 }

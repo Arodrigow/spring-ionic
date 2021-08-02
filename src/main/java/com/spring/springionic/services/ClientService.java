@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import java.awt.image.BufferedImage;
+
 import com.spring.springionic.domain.Address;
 import com.spring.springionic.domain.City;
 import com.spring.springionic.domain.Client;
@@ -19,6 +21,7 @@ import com.spring.springionic.services.exceptions.DataIntegrityException;
 import com.spring.springionic.services.exceptions.ObjectNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +42,12 @@ public class ClientService {
     private AddressRepository addressRepository;
     @Autowired
     private s3Service s3Service;
-    
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;    
+
     @Transactional
     public Client insert(Client obj){
         obj.setId(null);
@@ -117,10 +125,10 @@ public class ClientService {
         if(user == null){
             throw new AuthorizationException("Access denied.");
         }
-        URI uri = s3Service.uploadFile(multipartFile);
-        Client cli = find(user.getId());
-        cli.setImageURL(uri.toString());
-        repo.save(cli);
-        return uri;
+
+        BufferedImage jpImage = imageService.getJpgFromFile(multipartFile);
+        String fileName = prefix + user.getId() + ".jpg";
+
+        return s3Service.uploadFile(imageService.getInputStream(jpImage, "jpg"), fileName, "image");
     } 
 }

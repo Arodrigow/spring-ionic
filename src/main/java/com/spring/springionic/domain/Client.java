@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
@@ -56,6 +55,8 @@ public class Client implements Serializable{
     @JsonIgnore
     @OneToMany(mappedBy = "client")    
     private List<AppOrder> appOrders = new ArrayList<>();
+
+    private String imageURL;
 
     public Client(){
         addProfile(Profile.CLIENT);
@@ -150,6 +151,14 @@ public class Client implements Serializable{
 
     public void setOrders(List<AppOrder> orders) {
         this.appOrders = orders;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     @Override

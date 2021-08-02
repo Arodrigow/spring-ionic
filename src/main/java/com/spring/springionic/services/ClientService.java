@@ -1,5 +1,6 @@
 package com.spring.springionic.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ClientService {
@@ -35,6 +37,8 @@ public class ClientService {
     private ClientRepository repo;
     @Autowired
     private AddressRepository addressRepository;
+    @Autowired
+    private s3Service s3Service;
     
     @Transactional
     public Client insert(Client obj){
@@ -107,4 +111,8 @@ public class ClientService {
         newObj.setName(obj.getName());
         newObj.setEmail(obj.getEmail());
     }
+
+    public URI uploadProfilePicture(MultipartFile multipartFile){
+        return s3Service.uploadFile(multipartFile);
+    } 
 }

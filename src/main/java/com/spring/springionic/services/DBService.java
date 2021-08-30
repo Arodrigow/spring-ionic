@@ -59,12 +59,11 @@ public class DBService {
     public void instantiateTestDatabase() throws ParseException{
         Category cat1 = new Category(null, "Computing");
 		Category cat2 = new Category(null, "Office");
-		Category cat3 = new Category(null, "Bed");
-		Category cat4 = new Category(null, "Pet");
+		Category cat3 = new Category(null, "Bedding");
+		Category cat4 = new Category(null, "Electronics");
 		Category cat5 = new Category(null, "Hardware");
-		Category cat6 = new Category(null, "Software");
-		Category cat7 = new Category(null, "Education");
-		Category cat8 = new Category(null, "Clothes");
+		Category cat6 = new Category(null, "Home");
+		Category cat7 = new Category(null, "Household essentials");
 
 		Product p1 = new Product(null, "Computer", 2000.00);
 		Product p2 = new Product(null, "Printer", 800.00);
@@ -180,7 +179,7 @@ p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
 		p49.getCategories().add(cat1);
 		p50.getCategories().add(cat1);
 
-		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8));
+		categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3, p4, p5, p6, p7, p8, p9, p10, p11));
 		productRepository.saveAll(Arrays.asList(p12, p13, p14, p15, p16, p17, p18, p19, p20,
 p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p34, p35, p36, p37, p38,
@@ -199,7 +198,7 @@ p39, p40, p41, p42, p43, p44, p45, p46, p47, p48, p49, p50));
 		stateRepository.saveAll(Arrays.asList(st1, st2));
 		cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		Client cli1 = new Client(null, "Maria Silva", "alves.rodrigow@gmail.com", "36378912377", ClientType.NATURALPERSON, encoder.encode("123456"));
+		Client cli1 = new Client(null, "André Alves", "alves.rodrigow@gmail.com", "36378912377", ClientType.NATURALPERSON, encoder.encode("123456"));
 		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
 		
 		Client cli2 = new Client(null, "Rod Waciel", "andre.rodrigo.maciel@gmail.com", "96750137024", ClientType.NATURALPERSON, encoder.encode("123456"));
